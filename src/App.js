@@ -16,6 +16,11 @@ class App extends Component {
     number: '',
   };
 
+  handleChange = event => {
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value });
+  };
+
   addContact = contact => {
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
@@ -28,13 +33,16 @@ class App extends Component {
   //   }));
   // }; // 1.47 vebinar 3, на кнопку Видалити
 
-  findContact = event => {
-    event.preventDefault();
-  };
+  findContact = () => {
+    const { filter, contacts } = this.state;
 
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
+    if (filter.length) {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
+      );
+    } else {
+      return contacts;
+    }
   };
 
   handleSubmit = event => {
@@ -53,11 +61,14 @@ class App extends Component {
   // };
 
   render() {
+    const { name, number, filter } = this.state;
+
     return (
       <Container>
         <h1>PhoneBook</h1>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="">
+            {/* id зробити */}
             Name
             <input
               type="text"
@@ -65,11 +76,12 @@ class App extends Component {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
               required
-              value={this.state.name}
+              value={name}
               onChange={this.handleChange}
             />
           </label>
           <label htmlFor="">
+            {/* id зробити */}
             Number
             <input
               type="tel"
@@ -77,7 +89,7 @@ class App extends Component {
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Номер телефона должен состоять из цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
               required
-              value={this.state.number}
+              value={number}
               onChange={this.handleChange}
             />
           </label>
@@ -89,11 +101,11 @@ class App extends Component {
           <input
             type="text"
             name="filter"
-            value={this.state.filter}
+            value={filter}
             onChange={this.handleChange}
           />
           <ul>
-            {this.state.contacts.map(({ id, name, number }) => {
+            {this.findContact().map(({ id, name, number }) => {
               return (
                 <li key={id}>
                   {name}: {number}
