@@ -7,32 +7,35 @@ class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
-  addContact = name => {
-    const contact = {
-      id: shortid.generate(),
-      name,
-    };
-    console.log(contact);
-
+  addContact = contact => {
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
     }));
   };
 
+  // deleteContact = contactId => {
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+  //   }));
+  // }; // 1.47 vebinar 3, на кнопку Видалити
+
   handleChange = event => {
-    // const { name, value } = event.target;
-    // this.setState({ [name]: value });
-    this.setState({ name: event.currentTarget.value });
-    console.log({ name: event.currentTarget.value });
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    // this.onSubmit(this.state.name);
-    this.addContact(this.state.name);
-    this.setState({ name: '' });
+    const contact = {
+      id: shortid.generate(),
+      name: this.state.name,
+      number: this.state.number,
+    };
+    this.addContact(contact);
+    this.setState({ name: '', number: '' }); //reset
   };
 
   // formSubmitData = data => {
@@ -56,13 +59,29 @@ class App extends Component {
               onChange={this.handleChange}
             />
           </label>
+          <label htmlFor="">
+            Number
+            <input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Номер телефона должен состоять из цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+              required
+              value={this.state.number}
+              onChange={this.handleChange}
+            />
+          </label>
           <button type="submit">Add contact</button>
         </form>
         <div>
           <h2>Contacts</h2>
           <ul>
-            {this.state.contacts.map(({ id, name }) => {
-              return <li key={id}>{name}</li>;
+            {this.state.contacts.map(({ id, name, number }) => {
+              return (
+                <li key={id}>
+                  {name}: {number}
+                </li>
+              );
             })}
           </ul>
         </div>
