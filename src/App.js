@@ -21,10 +21,16 @@ class App extends Component {
   };
 
   addContact = contact => {
-    console.log('Add contact', contact);
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
+    if (!this.hasContacts(name))
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+  };
+
+  hasContacts = name => {
+    return this.state.contacts.find(contact => {
+      return contact.name === name;
+    });
   };
 
   findContact = () => {
@@ -49,7 +55,10 @@ class App extends Component {
     return (
       <Container>
         <h1>PhoneBook</h1>
-        <ContactsForm onSubmit={this.addContact} />
+        <ContactsForm
+          onSubmit={this.addContact}
+          hasContacts={this.hasContacts}
+        />
 
         <div>
           <h2>Contacts</h2>
