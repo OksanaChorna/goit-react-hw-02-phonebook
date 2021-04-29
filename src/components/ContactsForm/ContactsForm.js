@@ -30,9 +30,6 @@ class ContactsForm extends Component {
       number: this.state.number,
     };
 
-    this.props.hasContacts(this.state.name);
-    console.log(this.props.hasContacts(this.state.name));
-
     this.props.onSubmit(contact);
 
     this.reset();

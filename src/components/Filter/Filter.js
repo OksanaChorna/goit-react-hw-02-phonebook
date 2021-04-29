@@ -18,7 +18,7 @@ class Filter extends Component {
 }
 
 Filter.propTypes = {
-  filter: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

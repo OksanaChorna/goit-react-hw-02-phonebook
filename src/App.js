@@ -21,15 +21,18 @@ class App extends Component {
   };
 
   addContact = contact => {
-    if (!this.hasContacts(name))
+    if (!this.hasContacts(contact.name)) {
       this.setState(({ contacts }) => ({
         contacts: [contact, ...contacts],
       }));
+    } else {
+      alert(`${contact.name} is already in contacts`);
+    }
   };
 
   hasContacts = name => {
     return this.state.contacts.find(contact => {
-      return contact.name === name;
+      return contact.name.toLocaleLowerCase() === name.toLocaleLowerCase();
     });
   };
 
@@ -45,11 +48,13 @@ class App extends Component {
       return contacts;
     }
   };
-  // deleteContact = contactId => {
-  //   this.setState(prevState => ({
-  //     contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-  //   }));
-  // }; // 1.47 vebinar 3, на кнопку Видалити
+
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+  // 1.47 vebinar 3, на кнопку Видалити
 
   render() {
     return (
@@ -63,7 +68,10 @@ class App extends Component {
         <div>
           <h2>Contacts</h2>
           <Filter value={this.state.filter} onChange={this.handleChange} />
-          <ContactsList findContact={this.findContact} />
+          <ContactsList
+            findContact={this.findContact}
+            onDeleteContact={this.deleteContact}
+          />
         </div>
       </Container>
     );
