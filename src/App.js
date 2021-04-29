@@ -60,10 +60,7 @@ class App extends Component {
     return (
       <Container>
         <h1>PhoneBook</h1>
-        <ContactsForm
-          onSubmit={this.addContact}
-          hasContacts={this.hasContacts}
-        />
+        <ContactsForm onSubmit={this.addContact} />
 
         <div>
           <h2>Contacts</h2>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropsType from 'prop-types';
+import PropsType from 'prop-types';
 import style from './ContactsForm.module.css';
 import shortid from 'shortid';
 
@@ -15,7 +15,7 @@ class ContactsForm extends Component {
   };
 
   nameInputId = shortid.generate();
-  numberInpurId = shortid.generate();
+  numberInputId = shortid.generate();
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -57,7 +57,7 @@ class ContactsForm extends Component {
             id={this.nameInputId}
           />
         </label>
-        <label htmlFor={this.numberInpurId}>
+        <label htmlFor={this.numberInputId}>
           Number
           <input
             type="tel"
@@ -67,7 +67,7 @@ class ContactsForm extends Component {
             required
             value={number}
             onChange={this.handleChange}
-            id={this.numberInpurId}
+            id={this.numberInputId}
           />
         </label>
         <button className={style.button} type="submit">
@@ -77,5 +77,9 @@ class ContactsForm extends Component {
     );
   }
 }
+
+ContactsForm.prototype = {
+  onSubmit: PropsType.func.isRequired,
+};
 
 export default ContactsForm;

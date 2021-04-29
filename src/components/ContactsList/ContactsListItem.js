@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const ContactItem = ({ id, name, number, onDeleteContact }) => {
   return (
     <li>
@@ -7,6 +9,13 @@ const ContactItem = ({ id, name, number, onDeleteContact }) => {
       </button>
     </li>
   );
+};
+
+ContactItem.prototype = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactItem;
