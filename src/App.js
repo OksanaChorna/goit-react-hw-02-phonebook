@@ -54,7 +54,6 @@ class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
-  // 1.47 vebinar 3, на кнопку Видалити
 
   render() {
     return (

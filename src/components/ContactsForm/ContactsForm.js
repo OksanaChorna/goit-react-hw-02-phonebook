@@ -78,7 +78,7 @@ class ContactsForm extends Component {
   }
 }
 
-ContactsForm.prototype = {
+ContactsForm.PropsType = {
   onSubmit: PropsType.func.isRequired,
 };
 
